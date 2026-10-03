@@ -51,10 +51,18 @@ export const Attention = Schema.Struct({
 }).annotate({ description: "Attention notification and sound settings" })
 
 const PromptSize = Schema.Int.check(Schema.isGreaterThan(0))
+export const PasteSummaryLinesDefault = 3
+export const PasteSummaryCharsDefault = 150
 export const Prompt = Schema.Struct({
   max_height: Schema.optional(PromptSize).annotate({ description: "Prompt textarea max height" }),
   max_width: Schema.optional(Schema.Union([PromptSize, Schema.Literal("auto")])).annotate({
     description: "Home prompt max width: a positive integer for a fixed cap, or 'auto' to scale with terminal width",
+  }),
+  paste_summary_lines: Schema.optional(PromptSize).annotate({
+    description: "Lines of pasted text that trigger the compact paste summary",
+  }),
+  paste_summary_chars: Schema.optional(PromptSize).annotate({
+    description: "Characters of pasted text that trigger the compact paste summary",
   }),
 }).annotate({ description: "Prompt size settings" })
 

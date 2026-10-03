@@ -28,7 +28,7 @@ test("validates config constraints", () => {
     decodeInfo({
       leader_timeout: 250,
       attention: { volume: 1, sounds: { done: "done.wav" } },
-      prompt: { max_height: 10, max_width: "auto" },
+      prompt: { max_height: 10, max_width: "auto", paste_summary_lines: 5, paste_summary_chars: 500 },
       scroll_speed: 0.001,
       diff_style: "stacked",
       cursor: { blinking: false },
@@ -43,6 +43,8 @@ test("validates config constraints", () => {
   expect(() => decodeInfo({ leader_timeout: 0 })).toThrow()
   expect(() => decodeInfo({ attention: { volume: 1.1 } })).toThrow()
   expect(() => decodeInfo({ prompt: { max_width: 0 } })).toThrow()
+  expect(() => decodeInfo({ prompt: { paste_summary_lines: 0 } })).toThrow()
+  expect(() => decodeInfo({ prompt: { paste_summary_chars: 0 } })).toThrow()
   expect(() => decodeInfo({ scroll_speed: 0 })).toThrow()
   expect(() => decodeInfo({ cursor: { style: "beam" } })).toThrow()
   expect(decodeInfo({ attention: { sounds: { unknown: "sound.wav" } } })).toEqual({ attention: { sounds: {} } })
