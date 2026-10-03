@@ -278,6 +278,10 @@ Use a dedicated `tui.json` (or `tui.jsonc`) file for TUI-specific settings.
     "blinking": true
   },
   "mouse": true,
+  "prompt": {
+    "paste_summary_lines": 3,
+    "paste_summary_chars": 150
+  },
   "attention": {
     "enabled": true,
     "notifications": true,
@@ -292,6 +296,8 @@ Use `OPENCODE_TUI_CONFIG` to point to a custom TUI config file.
 When `cursor.style` is `"default"`, the terminal default cursor is restored, so `cursor.blinking` has no effect.
 
 Set `attention.enabled` to turn on TUI desktop notifications and sounds. See [TUI attention](/docs/tui#attention).
+
+Pastes with at least `prompt.paste_summary_lines` lines or more than `prompt.paste_summary_chars` characters are shown as a compact `[Pasted ~N lines]` placeholder. Raise either value to paste more text inline.
 
 Legacy `theme`, `keybinds`, and `tui` keys in `opencode.json` are deprecated and automatically migrated when possible.
 

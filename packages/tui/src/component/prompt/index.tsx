@@ -52,7 +52,7 @@ import { DialogSkill } from "../dialog-skill"
 import { DialogWorkspaceUnavailable } from "../dialog-workspace-unavailable"
 import { useArgs } from "../../context/args"
 import { OPENCODE_BASE_MODE, useBindings, useCommandShortcut, useLeaderActive, useOpencodeKeymap } from "../../keymap"
-import { useTuiConfig } from "../../config"
+import { PasteSummaryCharsDefault, PasteSummaryLinesDefault, useTuiConfig } from "../../config"
 import { usePromptWorkspace } from "./workspace"
 import { usePromptMove } from "./move"
 import { readLocalAttachment } from "./local-attachment"
@@ -1204,8 +1204,10 @@ export function Prompt(props: PromptProps) {
     }
 
     const lineCount = (pastedContent.match(/\n/g)?.length ?? 0) + 1
+    const summaryLines = tuiConfig.prompt?.paste_summary_lines ?? PasteSummaryLinesDefault
+    const summaryChars = tuiConfig.prompt?.paste_summary_chars ?? PasteSummaryCharsDefault
     if (
-      (lineCount >= 3 || pastedContent.length > 150) &&
+      (lineCount >= summaryLines || pastedContent.length > summaryChars) &&
       kv.get("paste_summary_enabled", !sync.data.config.experimental?.disable_paste_summary)
     ) {
       pasteText(pastedContent, `[Pasted ~${lineCount} lines]`)
